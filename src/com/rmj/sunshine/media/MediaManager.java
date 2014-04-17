@@ -11,6 +11,7 @@ public class MediaManager {
     private static MediaManager mInstance;
     public ProgrammeInfo mCurrentProgramme;
     boolean isNewProgramme;
+    boolean isConnecting = false;
 
     private MediaManager() {
     }
@@ -50,14 +51,21 @@ public class MediaManager {
     }
 
     public void play() {
-        if (isNewProgramme) {
-            try {
-                mMediaPlayer.setDataSource(mCurrentProgramme.mUrl);
-                mMediaPlayer.prepare();
-                isNewProgramme = false;
-            } catch (IOException e) {}
-        }
-        mMediaPlayer.start();
+        Thread _play = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (isNewProgramme) {
+                    try {
+                        mMediaPlayer.setDataSource(mCurrentProgramme.mUrl);
+                        mMediaPlayer.prepare();
+                        isNewProgramme = false;
+                    } catch (IOException e) {}
+                }
+                mMediaPlayer.start();
+            }
+        });
+        _play.start();
+
     }
 
     public void pause() {
