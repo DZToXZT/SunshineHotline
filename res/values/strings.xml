@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SunshineHotline</string>
+    <string name="media_player_head">阳光热线.直播</string>
+    <string name="media_player_hotline_1">热线1</string>
+    <string name="media_player_hotline_2">热线2</string>
+</resources>
