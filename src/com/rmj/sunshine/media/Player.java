@@ -18,6 +18,7 @@ public class Player extends Activity {
     ImageButton mPlayButton;
     Button mHotline1Button;
     Button mHotline2Button;
+    ImageButton mVideoButton;
     MediaManager mMediaManager;
     TextView mIntroduceTitle;
     TextView mIntroduceContent;
@@ -38,17 +39,27 @@ public class Player extends Activity {
         mHotline2Button = (Button) findViewById(R.id.media_btn_dial_2);
         mIntroduceTitle = (TextView) findViewById(R.id.media_tv_title);
         mIntroduceContent = (TextView) findViewById(R.id.media_tv_content);
+        mVideoButton = (ImageButton) findViewById(R.id.media_btn_video);
 
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mMediaManager.isPlaying()) {
-                    mMediaManager.pause();
-                    mPlayButton.setImageResource(getResources().getIdentifier("audio_player_play", "drawable", getApplicationContext().getPackageName()));
+                    pause();
                 } else {
-                    mPlayButton.setImageResource(getResources().getIdentifier("audio_player_pause", "drawable", getApplicationContext().getPackageName()));
-                    mMediaManager.play();
+                    play();
                 }
+            }
+        });
+        mVideoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mMediaManager.isPlaying()) {
+                    pause();
+                }
+                Intent _intent = new Intent(getApplicationContext(), VideoPlayer.class);
+                _intent.putExtra("url", mMediaManager.getProgrammeInfo().mVideoUrl);
+                startActivity(_intent);
             }
         });
         mHotline1Button.setOnClickListener(new View.OnClickListener() {
@@ -83,5 +94,15 @@ public class Player extends Activity {
     public void startMediaService() {
         Intent _intent = new Intent(this,MediaService.class);
         startService(_intent);
+    }
+
+    public void play() {
+        mPlayButton.setImageResource(getResources().getIdentifier("audio_player_pause", "drawable", getApplicationContext().getPackageName()));
+        mMediaManager.play();
+    }
+
+    public void pause() {
+        mMediaManager.pause();
+        mPlayButton.setImageResource(getResources().getIdentifier("audio_player_play", "drawable", getApplicationContext().getPackageName()));
     }
 }

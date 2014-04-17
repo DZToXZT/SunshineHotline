@@ -45,6 +45,7 @@ public class MediaManager {
         _info.mUrl = Urls.mAudioLive;
         _info.mTitle = "4月14日节目：中国建设银行河北省分行嘉宾做客直播间";
         _info.mContent = "中国建设银行河北省分行党委书记、行长李秀昆带队做客《阳光热线》，解答咨询，受理投诉。";
+        _info.mVideoUrl = Urls.mVideoLive;
         setProgrammeInfo(_info);
     }
 

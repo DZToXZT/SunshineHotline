@@ -7,4 +7,5 @@ public class ProgrammeInfo {
     public String mUrl;
     public String mTitle;
     public String mContent;
+    public String mVideoUrl;
 }

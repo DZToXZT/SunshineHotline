@@ -9,7 +9,7 @@
                      android:layout_height="fill_parent" android:src="@drawable/audio_player_back"/>
         <TextView android:id="@+id/media_tv_head"
                   android:layout_height="fill_parent" android:layout_width="0dp" android:layout_weight="4"
-                  android:text="@string/media_player_head" android:gravity="center"/>
+                  android:text="@string/media_player_head" android:textSize="20dp" android:gravity="center"/>
         <ImageButton android:id="@+id/media_btn_video" android:layout_width="0dp" android:layout_weight="1"
                      android:layout_height="wrap_content" android:src="@drawable/video_player"/>
     </LinearLayout>
