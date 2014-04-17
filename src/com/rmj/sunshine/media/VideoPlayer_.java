@@ -12,7 +12,7 @@ import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 
-public class VideoPlayer extends Activity {
+public class VideoPlayer_ extends Activity {
 
 	/**
 	 * TODO: Set the path variable to a streaming video URL or a local media file
@@ -32,7 +32,7 @@ public class VideoPlayer extends Activity {
 		mVideoView = (VideoView) findViewById(R.id.surface_view);
 		if (path == "") {
 			// Tell the user to provide a media file URL/path.
-			Toast.makeText(VideoPlayer.this, "Please edit VideoViewDemo Activity, and set path" + " variable to your media file URL/path", Toast.LENGTH_LONG).show();
+			Toast.makeText(VideoPlayer_.this, "Please edit VideoViewDemo Activity, and set path" + " variable to your media file URL/path", Toast.LENGTH_LONG).show();
 			return;
 		} else {
 			/*
