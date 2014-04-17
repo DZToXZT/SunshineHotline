@@ -2,7 +2,9 @@ package com.rmj.sunshine.media;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import io.vov.vitamio.MediaPlayer;
 
 /**
@@ -10,6 +12,8 @@ import io.vov.vitamio.MediaPlayer;
  */
 public class MediaService extends Service {
     MediaManager mMediaManager;
+    public static Handler mHandler;
+
     public IBinder onBind(Intent intent) {
         return null;
     }
@@ -17,8 +21,11 @@ public class MediaService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        initHandler();
         mMediaManager = MediaManager.getInstance();
         mMediaManager.setMediaPlayer(new MediaPlayer(this));
+
+
     }
 
     @Override
@@ -30,5 +37,51 @@ public class MediaService extends Service {
     public void onDestroy() {
         mMediaManager.release();
         super.onDestroy();
+    }
+
+    void initHandler() {
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case Status.MEDIA_OPERATION_PLAY:
+                        if (mMediaManager.isPlaying()) {
+                            pause();
+                        } else {
+                            play();
+                        }
+                        break;
+                    case Status.MEDIA_OPERATION_PLAY_VIDEO:
+                        playVideo();
+                        break;
+                    case Status.MEDIA_OPERATION_STOP:
+                        stop();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+    }
+
+    void play() {
+        mMediaManager.play();
+        Player.mHandler.sendEmptyMessage(Status.MEDIA_STATUS_PLAYED);
+    }
+
+    void pause() {
+        mMediaManager.pause();
+        Player.mHandler.sendEmptyMessage(Status.MEDIA_STATUS_PAUSED);
+    }
+
+    void stop() {
+        mMediaManager.stop();
+    }
+
+    void playVideo() {
+//        if (mMediaManager.isPlaying()) {
+//            pause();
+//        }
+        stop();
     }
 }

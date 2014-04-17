@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.rmj.sunshine.R;
 import io.vov.vitamio.LibsChecker;
@@ -15,6 +18,7 @@ import io.vov.vitamio.LibsChecker;
  * Created by G11 on 2014/4/15.
  */
 public class Player extends Activity {
+    public static Handler mHandler;
     ImageButton mPlayButton;
     Button mHotline1Button;
     Button mHotline2Button;
@@ -22,11 +26,13 @@ public class Player extends Activity {
     MediaManager mMediaManager;
     TextView mIntroduceTitle;
     TextView mIntroduceContent;
+    ProgressBar mProgressBar;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player);
 
+        initHandler();
         if (!LibsChecker.checkVitamioLibs(this)) {
             return;
         }
@@ -40,26 +46,22 @@ public class Player extends Activity {
         mIntroduceTitle = (TextView) findViewById(R.id.media_tv_title);
         mIntroduceContent = (TextView) findViewById(R.id.media_tv_content);
         mVideoButton = (ImageButton) findViewById(R.id.media_btn_video);
+        mProgressBar = (ProgressBar) findViewById(R.id.probar);
 
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mMediaManager.isPlaying()) {
-                    pause();
-                } else {
-                    play();
+                if (!mMediaManager.isPlaying()) {
+                    waiting();
                 }
+                MediaService.mHandler.sendEmptyMessage(Status.MEDIA_OPERATION_PLAY);
             }
         });
         mVideoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mMediaManager.isPlaying()) {
-                    pause();
-                }
-                Intent _intent = new Intent(getApplicationContext(), VideoPlayer.class);
-                _intent.putExtra("url", mMediaManager.getProgrammeInfo().mVideoUrl);
-                startActivity(_intent);
+                MediaService.mHandler.sendEmptyMessage(Status.MEDIA_OPERATION_PLAY_VIDEO);
+                playVideo();
             }
         });
         mHotline1Button.setOnClickListener(new View.OnClickListener() {
@@ -96,13 +98,46 @@ public class Player extends Activity {
         startService(_intent);
     }
 
-    public void play() {
+    public void played() {
+        mPlayButton.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
         mPlayButton.setImageResource(getResources().getIdentifier("audio_player_pause", "drawable", getApplicationContext().getPackageName()));
-        mMediaManager.play();
     }
 
-    public void pause() {
-        mMediaManager.pause();
+    public void paused() {
         mPlayButton.setImageResource(getResources().getIdentifier("audio_player_play", "drawable", getApplicationContext().getPackageName()));
+    }
+
+    public void playVideo() {
+        Intent _intent = new Intent(getApplicationContext(), VideoPlayer.class);
+        _intent.putExtra("url", mMediaManager.getProgrammeInfo().mVideoUrl);
+        startActivity(_intent);
+    }
+
+    public void waiting() {
+        mPlayButton.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    void initHandler() {
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case Status.MEDIA_STATUS_PLAYED:
+                        played();
+                        break;
+                    case Status.MEDIA_STATUS_PAUSED:
+                        paused();
+                        break;
+                    case Status.MEDIA_STATUS_STOPED:
+                        break;
+                    case Status.MEDIA_STATUS_WAITING:
+                        waiting();
+                    default:
+                        break;
+                }
+            }
+        };
     }
 }

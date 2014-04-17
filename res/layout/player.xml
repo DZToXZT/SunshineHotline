@@ -59,6 +59,12 @@
                      android:src="@drawable/audio_player_ask"/>
         <ImageButton android:id="@+id/media_btn_play" android:layout_width="wrap_content"
                      android:layout_height="wrap_content" android:src="@drawable/audio_player_play"/>
+        <ProgressBar
+                android:id="@+id/probar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:visibility="gone"/>
         <ImageButton android:id="@+id/media_btn_share" android:layout_width="wrap_content"
                      android:layout_height="wrap_content" android:layout_gravity="center_vertical"
                      android:src="@drawable/audio_player_share"/>

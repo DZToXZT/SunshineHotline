@@ -1,6 +1,7 @@
 package com.rmj.sunshine.media;
 
 import io.vov.vitamio.MediaPlayer;
+
 import java.io.IOException;
 
 /**
@@ -51,21 +52,15 @@ public class MediaManager {
     }
 
     public void play() {
-        Thread _play = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (isNewProgramme) {
-                    try {
-                        mMediaPlayer.setDataSource(mCurrentProgramme.mUrl);
-                        mMediaPlayer.prepare();
-                        isNewProgramme = false;
-                    } catch (IOException e) {}
-                }
-                mMediaPlayer.start();
+        if (isNewProgramme) {
+            try {
+                mMediaPlayer.setDataSource(mCurrentProgramme.mUrl);
+                mMediaPlayer.prepare();
+                isNewProgramme = false;
+            } catch (IOException e) {
             }
-        });
-        _play.start();
-
+        }
+        mMediaPlayer.start();
     }
 
     public void pause() {
