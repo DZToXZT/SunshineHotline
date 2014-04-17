@@ -109,7 +109,7 @@ public class Player extends Activity {
     }
 
     public void playVideo() {
-        Intent _intent = new Intent(getApplicationContext(), VideoPlayer_.class);
+        Intent _intent = new Intent(getApplicationContext(), VideoPlayer.class);
         _intent.putExtra("url", mMediaManager.getProgrammeInfo().mVideoUrl);
         startActivity(_intent);
     }
