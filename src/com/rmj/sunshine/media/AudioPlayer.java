@@ -17,12 +17,13 @@ import io.vov.vitamio.LibsChecker;
 /**
  * Created by G11 on 2014/4/15.
  */
-public class Player extends Activity {
+public class AudioPlayer extends Activity {
     public static Handler mHandler;
     ImageButton mPlayButton;
     Button mHotline1Button;
     Button mHotline2Button;
     ImageButton mVideoButton;
+    ImageButton mBackButton;
     MediaManager mMediaManager;
     TextView mIntroduceTitle;
     TextView mIntroduceContent;
@@ -38,7 +39,6 @@ public class Player extends Activity {
         }
         startMediaService();
         mMediaManager = MediaManager.getInstance();
-        mMediaManager.initProgrammeInfo();
 
         mPlayButton = (ImageButton) findViewById(R.id.media_btn_play);
         mHotline1Button = (Button) findViewById(R.id.media_btn_dial_1);
@@ -47,6 +47,7 @@ public class Player extends Activity {
         mIntroduceContent = (TextView) findViewById(R.id.media_tv_content);
         mVideoButton = (ImageButton) findViewById(R.id.media_btn_video);
         mProgressBar = (ProgressBar) findViewById(R.id.probar);
+        mBackButton = (ImageButton) findViewById(R.id.media_btn_back);
 
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,12 +81,26 @@ public class Player extends Activity {
                 startActivity(_intent);
             }
         });
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         setIntroduce();
+        if (MediaManager.mMediaPlayer!=null) {
+        	if (mMediaManager.isPlaying()) {
+        		played();
+			} else if (mMediaManager.isConnecting()) {
+				waiting();
+			}
+			
+		}
     }
 
     public void setIntroduce() {

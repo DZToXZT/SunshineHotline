@@ -15,6 +15,7 @@ public class MediaManager {
     boolean isConnecting = false;
 
     private MediaManager() {
+		initProgrammeInfo();
     }
 
     public static MediaManager getInstance() {
@@ -54,12 +55,14 @@ public class MediaManager {
     public void play() {
         if (isNewProgramme) {
             try {
+				stop();
                 mMediaPlayer.setDataSource(mCurrentProgramme.mUrl);
                 mMediaPlayer.prepare();
                 isNewProgramme = false;
             } catch (IOException e) {
             }
         }
+		isConnecting = false;
         mMediaPlayer.start();
     }
 
@@ -74,6 +77,9 @@ public class MediaManager {
 
     public boolean isPlaying() {
         return mMediaPlayer.isPlaying();
+    }
+	public boolean isConnecting() {
+    	return isConnecting;
     }
 
     public void release() {

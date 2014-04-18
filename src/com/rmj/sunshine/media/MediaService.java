@@ -48,6 +48,7 @@ public class MediaService extends Service {
                         if (mMediaManager.isPlaying()) {
                             pause();
                         } else {
+							mMediaManager.isConnecting = true;
                             play();
                         }
                         break;
@@ -65,13 +66,21 @@ public class MediaService extends Service {
     }
 
     void play() {
+    	//Ìí¼Ó¶¨Ê±Æ÷
+    	//
+    	new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
         mMediaManager.play();
-        Player.mHandler.sendEmptyMessage(Status.MEDIA_STATUS_PLAYED);
+        AudioPlayer.mHandler.sendEmptyMessage(Status.MEDIA_STATUS_PLAYED);
+			}
+		}).start();
     }
 
     void pause() {
         mMediaManager.pause();
-        Player.mHandler.sendEmptyMessage(Status.MEDIA_STATUS_PAUSED);
+        AudioPlayer.mHandler.sendEmptyMessage(Status.MEDIA_STATUS_PAUSED);
     }
 
     void stop() {

@@ -4,4 +4,8 @@
     <string name="media_player_head">阳光热线.直播</string>
     <string name="media_player_hotline_1">热线1</string>
     <string name="media_player_hotline_2">热线2</string>
+    <string name="media_player_ask">提问</string>
+    <string name="media_player_share">分享</string>
+    <string name="media_player_playing">暂停</string>
+    <string name="media_player_paused">播放</string>
 </resources>
