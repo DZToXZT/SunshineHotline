@@ -1,11 +1,14 @@
 package com.rmj.sunshine.media;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -28,6 +31,7 @@ public class AudioPlayer extends Activity {
     TextView mIntroduceTitle;
     TextView mIntroduceContent;
     ProgressBar mProgressBar;
+    TextView mPlayTextView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +52,7 @@ public class AudioPlayer extends Activity {
         mVideoButton = (ImageButton) findViewById(R.id.media_btn_video);
         mProgressBar = (ProgressBar) findViewById(R.id.probar);
         mBackButton = (ImageButton) findViewById(R.id.media_btn_back);
+        mPlayTextView = (TextView) findViewById(R.id.media_tv_player_status);
 
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,10 +122,12 @@ public class AudioPlayer extends Activity {
         mPlayButton.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
         mPlayButton.setImageResource(getResources().getIdentifier("audio_player_pause", "drawable", getApplicationContext().getPackageName()));
+        mPlayTextView.setText(getResources().getIdentifier("media_status_played","string",getApplicationContext().getPackageName()));
     }
 
     public void paused() {
         mPlayButton.setImageResource(getResources().getIdentifier("audio_player_play", "drawable", getApplicationContext().getPackageName()));
+        mPlayTextView.setText(getResources().getIdentifier("media_status_paused","string",getApplicationContext().getPackageName()));
     }
 
     public void playVideo() {
@@ -132,6 +139,7 @@ public class AudioPlayer extends Activity {
     public void waiting() {
         mPlayButton.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
+        mPlayTextView.setText(getResources().getIdentifier("media_status_waiting","string",getApplicationContext().getPackageName()));
     }
 
     void initHandler() {
@@ -155,4 +163,37 @@ public class AudioPlayer extends Activity {
             }
         };
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            AlertDialog _dialog = new AlertDialog.Builder(this).create();
+            _dialog.setButton(AlertDialog.BUTTON_NEGATIVE,"退出",mExitDialogListener);
+            _dialog.setButton(AlertDialog.BUTTON_NEUTRAL,"后台",mExitDialogListener);
+            _dialog.setButton(AlertDialog.BUTTON_POSITIVE,"取消",mExitDialogListener);
+            _dialog.show();
+        }
+        return false;
+    }
+    DialogInterface.OnClickListener mExitDialogListener = new DialogInterface.OnClickListener()
+    {
+        public void onClick(DialogInterface dialog, int which)
+        {
+            switch (which)
+            {
+                case AlertDialog.BUTTON_NEGATIVE:
+                    MediaService.mHandler.sendEmptyMessage(Status.MEDIA_STOP_SERVICE);
+                    finish();
+                    break;
+                case AlertDialog.BUTTON_NEUTRAL:
+                    finish();
+                    break;
+                case AlertDialog.BUTTON_POSITIVE:
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
 }

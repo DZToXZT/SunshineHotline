@@ -2,10 +2,11 @@
 <resources>
     <string name="app_name">SunshineHotline</string>
     <string name="media_player_head">阳光热线.直播</string>
-    <string name="media_player_hotline_1">热线1</string>
-    <string name="media_player_hotline_2">热线2</string>
-    <string name="media_player_ask">提问</string>
+    <string name="media_player_hotline_1">热线一</string>
+    <string name="media_player_hotline_2">热线二</string>
+    <string name="media_player_ask">我要提问</string>
     <string name="media_player_share">分享</string>
-    <string name="media_player_playing">暂停</string>
-    <string name="media_player_paused">播放</string>
+    <string name="media_status_played">暂停</string>
+    <string name="media_status_paused">播放</string>
+    <string name="media_status_waiting">载入中...</string>
 </resources>

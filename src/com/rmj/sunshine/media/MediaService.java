@@ -36,6 +36,7 @@ public class MediaService extends Service {
     @Override
     public void onDestroy() {
         mMediaManager.release();
+        mMediaManager = null;
         super.onDestroy();
     }
 
@@ -58,6 +59,9 @@ public class MediaService extends Service {
                     case Status.MEDIA_OPERATION_STOP:
                         stop();
                         break;
+                    case Status.MEDIA_STOP_SERVICE:
+                        stopSelf();
+                        break;
                     default:
                         break;
                 }
@@ -66,7 +70,7 @@ public class MediaService extends Service {
     }
 
     void play() {
-    	//���Ӷ�ʱ��
+    	//添加计时器，设置超时
     	//
     	new Thread(new Runnable() {
 			
