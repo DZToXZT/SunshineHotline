@@ -492,6 +492,16 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
 
     public void reset(boolean cleartargetstate) {
         if (mMediaPlayer != null) {
+            //Set Listeners to null
+            mMediaPlayer.setOnPreparedListener(null);
+            mMediaPlayer.setOnBufferingUpdateListener(null);
+            mMediaPlayer.setOnCompletionListener(null);
+            mMediaPlayer.setOnSeekCompleteListener(null);
+            mMediaPlayer.setOnErrorListener(null);
+            mMediaPlayer.setOnInfoListener(null);
+            mMediaPlayer.setOnVideoSizeChangedListener(null);
+            mMediaPlayer.setOnCachingUpdateListener(null);
+            mMediaPlayer.setOnHWRenderFailedListener(null);
             mMediaPlayer.reset();
             mCurrentState = STATE_IDLE;
             if (cleartargetstate)
