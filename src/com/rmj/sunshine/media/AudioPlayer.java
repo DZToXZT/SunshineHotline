@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.*;
 import com.rmj.sunshine.R;
+import io.vov.vitamio.MediaPlayer;
 
 /**
  * Created by G11 on 2014/4/15.
@@ -96,14 +97,19 @@ public class AudioPlayer extends Activity {
     protected void onStart() {
         super.onStart();
         setIntroduce();
-        if (MediaManager.mMediaPlayer!=null) {
-        	if (mMediaManager.isPlaying()) {
-        		played();
-			} else if (mMediaManager.isConnecting()) {
-				waiting();
-			}
-			
+        if (MediaManager.mMediaPlayer == null) {
+        	MediaManager.getInstance().setMediaPlayer(new MediaPlayer(getApplicationContext()));
 		}
+        if (mMediaManager.isPlaying()) {
+            played();
+        } else if (mMediaManager.isConnecting()) {
+            waiting();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     public void setIntroduce() {

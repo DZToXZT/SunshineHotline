@@ -1,8 +1,6 @@
 package com.rmj.sunshine.media;
 
-import android.content.Context;
 import io.vov.vitamio.MediaPlayer;
-import io.vov.vitamio.utils.ContextUtils;
 
 import java.io.IOException;
 
@@ -76,6 +74,13 @@ public class MediaManager {
     public void stop() {
         mMediaPlayer.stop();
         mMediaPlayer.reset();
+    }
+
+    public void stopForVideo() {
+        mMediaPlayer.stop();
+        mMediaPlayer.reset();
+        mMediaPlayer.release();
+        mMediaPlayer = null;
     }
 
     public boolean isPlaying() {

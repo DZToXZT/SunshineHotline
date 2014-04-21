@@ -24,7 +24,7 @@ public class MediaService extends Service {
         super.onCreate();
         initHandler();
         mMediaManager = MediaManager.getInstance();
-        mMediaManager.setMediaPlayer(new MediaPlayer(this));
+        mMediaManager.setMediaPlayer(new MediaPlayer(getApplicationContext()));
         SplashScreen.mHandler.sendEmptyMessage(Status.MEDIA_SERVICE_INITRIALIZED);
     }
 
@@ -92,7 +92,7 @@ public class MediaService extends Service {
     }
 
     void playVideo() {
-        stop();
+        mMediaManager.stopForVideo();
         AudioPlayer.mHandler.sendEmptyMessage(Status.MEDIA_OPETATION_START_VIDEO);
     }
 }

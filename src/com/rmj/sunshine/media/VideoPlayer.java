@@ -111,8 +111,9 @@ public class VideoPlayer extends Activity implements OnInfoListener, OnBuffering
 
     @Override
     protected void onDestroy() {
-        MediaManager.mMediaPlayer.stop();
-        MediaManager.mMediaPlayer.reset();
+//        MediaManager.mMediaPlayer.stop();
+//        MediaManager.mMediaPlayer.reset();
+        mVideoView.stopPlayback();
         super.onDestroy();
     }
 
