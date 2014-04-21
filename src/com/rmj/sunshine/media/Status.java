@@ -16,4 +16,6 @@ public class Status {
 
     public final static int MEDIA_OPERATION_PLAY_VIDEO = 21;
 
+    public final static int MEDIA_SERVICE_INITRIALIZED = 101;
+
 }

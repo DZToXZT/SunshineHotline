@@ -1,6 +1,8 @@
 package com.rmj.sunshine.media;
 
+import android.content.Context;
 import io.vov.vitamio.MediaPlayer;
+import io.vov.vitamio.utils.ContextUtils;
 
 import java.io.IOException;
 
@@ -83,8 +85,10 @@ public class MediaManager {
     }
 
     public void release() {
-        mMediaPlayer.release();
-        mMediaPlayer = null;
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
         mInstance = null;
     }
 }

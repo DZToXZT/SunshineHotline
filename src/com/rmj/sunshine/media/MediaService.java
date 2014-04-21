@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import com.rmj.sunshine.SplashScreen;
 import io.vov.vitamio.MediaPlayer;
 
 /**
@@ -24,8 +25,7 @@ public class MediaService extends Service {
         initHandler();
         mMediaManager = MediaManager.getInstance();
         mMediaManager.setMediaPlayer(new MediaPlayer(this));
-
-
+        SplashScreen.mHandler.sendEmptyMessage(Status.MEDIA_SERVICE_INITRIALIZED);
     }
 
     @Override

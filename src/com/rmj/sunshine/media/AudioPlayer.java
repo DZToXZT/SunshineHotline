@@ -38,9 +38,7 @@ public class AudioPlayer extends Activity {
         setContentView(R.layout.player);
 
         initHandler();
-        if (!LibsChecker.checkVitamioLibs(this)) {
-            return;
-        }
+        //LibChecker
         startMediaService();
         mMediaManager = MediaManager.getInstance();
 
@@ -168,6 +166,8 @@ public class AudioPlayer extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             AlertDialog _dialog = new AlertDialog.Builder(this).create();
+            _dialog.setTitle("退出");
+            _dialog.setMessage("您确定退出吗？");
             _dialog.setButton(AlertDialog.BUTTON_NEGATIVE,"退出",mExitDialogListener);
             _dialog.setButton(AlertDialog.BUTTON_NEUTRAL,"后台",mExitDialogListener);
             _dialog.setButton(AlertDialog.BUTTON_POSITIVE,"取消",mExitDialogListener);
