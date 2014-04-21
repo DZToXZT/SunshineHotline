@@ -19,13 +19,13 @@ package com.rmj.sunshine.media;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rmj.sunshine.R;
-import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
 import io.vov.vitamio.MediaPlayer.OnInfoListener;
@@ -34,7 +34,7 @@ import io.vov.vitamio.widget.VideoView;
 
 public class VideoPlayer extends Activity implements OnInfoListener, OnBufferingUpdateListener {
 
-  private String path = "http://a.hebradio.com:1935/live/300kb/playlist.m3u8";
+  private String path = "mms://dianbo.hebradio.com/whbvod/music/ygrx20140327.wmv";//"http://a.hebradio.com:1935/live/300kb/playlist.m3u8";
   private Uri uri;
   private VideoView mVideoView;
   private ProgressBar pb;
@@ -45,7 +45,7 @@ public class VideoPlayer extends Activity implements OnInfoListener, OnBuffering
     super.onCreate(icicle);
     setContentView(R.layout.videoplayer);
     mVideoView = (VideoView) findViewById(R.id.video_player_buffer);
-    pb = (ProgressBar) findViewById(R.id.probar);
+    pb = (ProgressBar) findViewById(R.id.video_player_progressbar);
 
     downloadRateView = (TextView) findViewById(R.id.video_player_download_rate);
     loadRateView = (TextView) findViewById(R.id.video_player_load_rate);
@@ -101,7 +101,22 @@ public class VideoPlayer extends Activity implements OnInfoListener, OnBuffering
     return true;
   }
 
-  @Override
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        MediaManager.mMediaPlayer.stop();
+        MediaManager.mMediaPlayer.reset();
+        super.onDestroy();
+    }
+
+    @Override
   public void onBufferingUpdate(MediaPlayer mp, int percent) {
     loadRateView.setText(percent + "%");
   }

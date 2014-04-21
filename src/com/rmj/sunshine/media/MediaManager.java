@@ -75,6 +75,7 @@ public class MediaManager {
 
     public void stop() {
         mMediaPlayer.stop();
+        mMediaPlayer.reset();
     }
 
     public boolean isPlaying() {

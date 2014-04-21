@@ -104,14 +104,14 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"/>
         <SeekBar
-                android:id="@+id/media_player_seekbar"
+                android:id="@+id/media_player_audio_seekbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxHeight="4dp"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/media_player_time_total"
                 android:layout_toRightOf="@id/media_player_time_current"
-                android:focusable="true"
+                android:focusable="false"
                 android:progressDrawable="@drawable/seekbar_style"
                 android:thumb="@drawable/seek_up"
                 android:max="1000"/>

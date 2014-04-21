@@ -15,6 +15,7 @@ public class Status {
     public final static int MEDIA_STATUS_WAITING = 14;
 
     public final static int MEDIA_OPERATION_PLAY_VIDEO = 21;
+    public final static int MEDIA_OPETATION_START_VIDEO = 22;
 
     public final static int MEDIA_SERVICE_INITRIALIZED = 101;
 

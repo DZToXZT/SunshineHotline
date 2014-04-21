@@ -92,9 +92,7 @@ public class MediaService extends Service {
     }
 
     void playVideo() {
-//        if (mMediaManager.isPlaying()) {
-//            pause();
-//        }
         stop();
+        AudioPlayer.mHandler.sendEmptyMessage(Status.MEDIA_OPETATION_START_VIDEO);
     }
 }

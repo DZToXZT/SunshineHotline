@@ -24,19 +24,25 @@ public class SplashScreen extends Activity {
             return;
         }
         startService(new Intent(this, MediaService.class));
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    case Status.MEDIA_SERVICE_INITRIALIZED:
-                        Intent _intent = new Intent(getApplicationContext(),AudioPlayer.class);
-                        startActivity(_intent);
-                        mHandler = null;
-                    default:
-                        finish();
+        if (mHandler==null) {
+            mHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    switch (msg.what) {
+                        case Status.MEDIA_SERVICE_INITRIALIZED:
+                            Intent _intent = new Intent(getApplicationContext(),AudioPlayer.class);
+                            startActivity(_intent);
+                            mHandler = null;
+                        default:
+                            finish();
+                    }
                 }
-            }
-        };
+            };
+        }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 }

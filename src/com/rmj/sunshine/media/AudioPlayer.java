@@ -10,12 +10,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.*;
 import com.rmj.sunshine.R;
-import io.vov.vitamio.LibsChecker;
 
 /**
  * Created by G11 on 2014/4/15.
@@ -32,6 +28,7 @@ public class AudioPlayer extends Activity {
     TextView mIntroduceContent;
     ProgressBar mProgressBar;
     TextView mPlayTextView;
+    SeekBar mAudioSeekBar;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +49,9 @@ public class AudioPlayer extends Activity {
         mBackButton = (ImageButton) findViewById(R.id.media_btn_back);
         mPlayTextView = (TextView) findViewById(R.id.media_tv_player_status);
 
+        mAudioSeekBar = (SeekBar) findViewById(R.id.media_player_audio_seekbar);
+        mAudioSeekBar.setEnabled(false);
+
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,8 +64,8 @@ public class AudioPlayer extends Activity {
         mVideoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                stop();
                 MediaService.mHandler.sendEmptyMessage(Status.MEDIA_OPERATION_PLAY_VIDEO);
-                playVideo();
             }
         });
         mHotline1Button.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +128,11 @@ public class AudioPlayer extends Activity {
         mPlayTextView.setText(getResources().getIdentifier("media_status_paused","string",getApplicationContext().getPackageName()));
     }
 
+    public void stop() {
+        mPlayButton.setImageResource(getResources().getIdentifier("audio_player_play", "drawable", getApplicationContext().getPackageName()));
+        mPlayTextView.setText(getResources().getIdentifier("media_status_paused","string",getApplicationContext().getPackageName()));
+    }
+
     public void playVideo() {
         Intent _intent = new Intent(getApplicationContext(), VideoPlayer.class);
         _intent.putExtra("url", mMediaManager.getProgrammeInfo().mVideoUrl);
@@ -155,6 +160,10 @@ public class AudioPlayer extends Activity {
                         break;
                     case Status.MEDIA_STATUS_WAITING:
                         waiting();
+                        break;
+                    case Status.MEDIA_OPETATION_START_VIDEO:
+                        playVideo();
+                        break;
                     default:
                         break;
                 }
