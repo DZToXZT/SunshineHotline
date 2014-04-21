@@ -30,7 +30,6 @@ import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
 import io.vov.vitamio.MediaPlayer.OnInfoListener;
 import io.vov.vitamio.widget.MediaController;
-import io.vov.vitamio.widget.VideoView;
 
 public class VideoPlayer extends Activity implements OnInfoListener, OnBufferingUpdateListener {
 
@@ -111,9 +110,10 @@ public class VideoPlayer extends Activity implements OnInfoListener, OnBuffering
 
     @Override
     protected void onDestroy() {
-//        MediaManager.mMediaPlayer.stop();
-//        MediaManager.mMediaPlayer.reset();
-        mVideoView.stopPlayback();
+        if (MediaManager.mMediaPlayer!=null) {
+            MediaManager.mMediaPlayer.stop();
+            MediaManager.mMediaPlayer.reset();
+        }
         super.onDestroy();
     }
 

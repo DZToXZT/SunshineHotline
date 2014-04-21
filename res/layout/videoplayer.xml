@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <io.vov.vitamio.widget.VideoView
+        <com.rmj.sunshine.media.VideoView
             android:id="@+id/video_player_buffer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
