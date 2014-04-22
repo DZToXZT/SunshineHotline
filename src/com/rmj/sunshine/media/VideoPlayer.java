@@ -113,6 +113,7 @@ public class VideoPlayer extends Activity implements OnInfoListener, OnBuffering
         if (MediaManager.mMediaPlayer!=null) {
             MediaManager.mMediaPlayer.stop();
             MediaManager.mMediaPlayer.reset();
+            mVideoView.setMediaController(null);
         }
         super.onDestroy();
     }

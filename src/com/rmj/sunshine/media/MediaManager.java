@@ -74,11 +74,15 @@ public class MediaManager {
     public void stop() {
         mMediaPlayer.stop();
         mMediaPlayer.reset();
+        isNewProgramme = true;
+        isConnecting = false;
     }
 
     public void stopForVideo() {
         mMediaPlayer.stop();
         mMediaPlayer.reset();
+        isNewProgramme = true;
+        isConnecting = false;
     }
 
     public boolean isPlaying() {

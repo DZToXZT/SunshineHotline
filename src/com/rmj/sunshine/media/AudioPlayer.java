@@ -135,6 +135,8 @@ public class AudioPlayer extends Activity {
     }
 
     public void stop() {
+        mPlayButton.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
         mPlayButton.setImageResource(getResources().getIdentifier("audio_player_play", "drawable", getApplicationContext().getPackageName()));
         mPlayTextView.setText(getResources().getIdentifier("media_status_paused","string",getApplicationContext().getPackageName()));
     }
