@@ -30,6 +30,7 @@ public class AudioPlayer extends Activity {
     ProgressBar mProgressBar;
     TextView mPlayTextView;
     SeekBar mAudioSeekBar;
+    
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
